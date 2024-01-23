@@ -1,0 +1,26 @@
+{
+    "name": "Simon says",
+    "width": 1470,
+    "height": 840,
+    "button_size_right": 200,
+    "button_size_left": 210,
+    "game_over_animation_speed": 15,
+    "button_animation_speed": 15,
+    "fps": 60,
+    "colors": {
+        "LIGHTGREY": [245, 245, 245],
+        "GREY": [112, 112, 112],
+        "B1": [51, 204, 51],
+        "B2": [0, 51, 153],
+        "B3": [153, 0, 153],
+        "B4": [255, 0, 0],
+        "B5": [255, 153, 0],
+        "B6": [255, 204, 0],
+        "B7": [0, 204, 153],
+        "B8": [0, 255, 255],
+        "B9": [204, 153, 255],
+        "FLASH": [156, 28, 19],
+        "upper_text_color": [0, 102, 153],
+        "lower_text_color": [204, 0, 0]
+    }
+}
