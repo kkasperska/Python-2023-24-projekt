@@ -52,26 +52,24 @@ class Game:
         
         start_y = 100
         a = 1
-        for _ in range(3):
+        for i in range(1, 8, 3):
             start_x = 100
             for j in range(1, 4):    
-               button = Button(start_x, start_y, self.color, self.data["button_size_left"], self.flash_colors[a+j-2])
+               button = Button(start_x, start_y, self.color, self.data["button_size_left"], self.flash_colors[j+i-2])
                self.buttons_computer.append(button)
                start_x += self.data["button_size_left"]
             start_y += self.data["button_size_left"]
-            a += 3
             
         x0 = start_x + 40
         start_y = 100
         a = 1
-        for _ in range(3):
+        for i in range(1, 8, 3):
             start_x = x0
             for j in range(1, 4):    
-               button = Button(start_x, start_y, self.color, self.data["button_size_right"], self.flash_colors[a+j-2])
+               button = Button(start_x, start_y, self.color, self.data["button_size_right"], self.flash_colors[j+i-2])
                self.buttons_player.append(button)
                start_x += self.data["button_size_right"] + 10
             start_y += self.data["button_size_right"] + 10
-            a += 3
     
     def get_high_score(self):
         with open("assets/high_score.txt", "r") as file:
@@ -91,7 +89,7 @@ class Game:
                 quit(0)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_x, mouse_y = pygame.mouse.get_pos()
+                mouse_x, mouse_y = event.pos
                 for button in self.buttons_player:
                     if button.is_clicked(mouse_x, mouse_y):
                         self.clicked_button = button
