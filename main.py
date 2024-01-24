@@ -14,9 +14,11 @@ class Button:
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
 
     def is_clicked(self, mouse_x, mouse_y):
-        return self.x <= mouse_x <= (self.x + self.size) and self.y <= mouse_y <= (self.y + self.size)
+        return (self.x <= mouse_x <= (self.x + self.size) and
+                self.y <= mouse_y <= (self.y + self.size))
     
-    #funkcja wzorowana na https://stackoverflow.com/questions/54593653/how-to-fade-in-a-text-or-an-image-with-pygame?noredirect=1&lq=1
+    #funkcja wzorowana na
+    # https://stackoverflow.com/questions/54593653/how-to-fade-in-a-text-or-an-image-with-pygame?noredirect=1&lq=1
     def animation(self, game, animation_speed, fps, clock):
         flash_surface = pygame.Surface((self.size, self.size))
         button_surface = pygame.Surface((self.size, self.size))
@@ -41,7 +43,15 @@ class Game:
         self.screen = pygame.display.set_mode((self.data["width"], self.data["height"]))
         pygame.display.set_caption(self.data["name"])
         self.clock = pygame.time.Clock()
-        self.flash_colors = [self.data["colors"]["B1"], self.data["colors"]["B2"], self.data["colors"]["B3"], self.data["colors"]["B4"], self.data["colors"]["B5"], self.data["colors"]["B6"], self.data["colors"]["B7"], self.data["colors"]["B8"], self.data["colors"]["B9"]]
+        self.flash_colors = [self.data["colors"]["B1"],
+                             self.data["colors"]["B2"],
+                             self.data["colors"]["B3"],
+                             self.data["colors"]["B4"],
+                             self.data["colors"]["B5"],
+                             self.data["colors"]["B6"],
+                             self.data["colors"]["B7"],
+                             self.data["colors"]["B8"],
+                             self.data["colors"]["B9"]]
         self.color = self.data["colors"]["GREY"]
         self.button_sound = pygame.mixer.Sound("assets/click-button-140881.mp3")
         self.game_over_sound = pygame.mixer.Sound("assets/error-call-to-attention-129258.mp3")
@@ -55,7 +65,9 @@ class Game:
         for i in range(1, 8, 3):
             start_x = 100
             for j in range(1, 4):    
-               button = Button(start_x, start_y, self.color, self.data["button_size_left"], self.flash_colors[j+i-2])
+               button = Button(start_x, start_y, self.color,
+                               self.data["button_size_left"],
+                               self.flash_colors[j+i-2])
                self.buttons_computer.append(button)
                start_x += self.data["button_size_left"]
             start_y += self.data["button_size_left"]
@@ -66,7 +78,9 @@ class Game:
         for i in range(1, 8, 3):
             start_x = x0
             for j in range(1, 4):    
-               button = Button(start_x, start_y, self.color, self.data["button_size_right"], self.flash_colors[j+i-2])
+               button = Button(start_x, start_y, self.color,
+                               self.data["button_size_right"],
+                               self.flash_colors[j+i-2])
                self.buttons_player.append(button)
                start_x += self.data["button_size_right"] + 10
             start_y += self.data["button_size_right"] + 10
@@ -97,13 +111,17 @@ class Game:
     def draw(self):
         font = pygame.font.Font("assets/Federant-Regular.ttf", 32)
         self.screen.fill(self.data["colors"]["LIGHTGREY"])
-        text_sc = font.render(f"Score: {str(self.score)}", False, self.data["colors"]["lower_text_color"])
+        text_sc = font.render(f"Score: {str(self.score)}", False,
+                              self.data["colors"]["lower_text_color"])
         self.screen.blit(text_sc, (357, 750))
-        text_hisc = font.render(f"High score: {str(self.high_score)}", False, self.data["colors"]["lower_text_color"])
+        text_hisc = font.render(f"High score: {str(self.high_score)}", False,
+                                self.data["colors"]["lower_text_color"])
         self.screen.blit(text_hisc, (990, 750))
-        text_seq = font.render("Sequence", False, self.data["colors"]["upper_text_color"])
+        text_seq = font.render("Sequence", False,
+                               self.data["colors"]["upper_text_color"])
         self.screen.blit(text_seq, (345, 50))
-        text_pl = font.render("Player", False, self.data["colors"]["upper_text_color"])
+        text_pl = font.render("Player", False,
+                              self.data["colors"]["upper_text_color"])
         self.screen.blit(text_pl, (1030, 50))
         for button in self.buttons_computer:
             button.draw(self.screen)
@@ -124,14 +142,19 @@ class Game:
             pygame.time.wait(1000)
             self.pattern.append(random.choice(self.buttons_computer))
             for button in self.pattern:
-                button.animation(self, self.data["button_animation_speed"], self.data["fps"], self.clock)
+                button.animation(self, self.data["button_animation_speed"],
+                                 self.data["fps"], self.clock)
                 pygame.time.wait(200)
             self.waiting_input = True
         
         else:
             pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
-            if self.clicked_button and self.buttons_player.index(self.clicked_button) == self.buttons_computer.index(self.pattern[self.step]):
-                self.clicked_button.animation(self, self.data["button_animation_speed"], self.data["fps"], self.clock)
+            if (self.clicked_button and
+                self.buttons_player.index(self.clicked_button)
+                == self.buttons_computer.index(self.pattern[self.step])):
+                self.clicked_button.animation(self,
+                                              self.data["button_animation_speed"],
+                                              self.data["fps"], self.clock)
                 self.step += 1
 
                 if self.step == len(self.pattern):
@@ -140,15 +163,20 @@ class Game:
                         self.new_high_score_sound.play()
                     self.waiting_input = False
                     self.step = 0
-            elif self.clicked_button and self.buttons_player.index(self.clicked_button) != self.buttons_computer.index(self.pattern[self.step]):
-                    self.clicked_button.animation(self, self.data["button_animation_speed"], self.data["fps"], self.clock)
+            elif (self.clicked_button and
+                  self.buttons_player.index(self.clicked_button)
+                  != self.buttons_computer.index(self.pattern[self.step])):
+                    self.clicked_button.animation(self,
+                                                  self.data["button_animation_speed"],
+                                                  self.data["fps"], self.clock)
                     self.playing = False
                     pygame.time.wait(200)
                     self.game_over_animation()
                     if self.score > self.high_score:
                         self.set_high_score()
 
-    #funkcja wzorowana na https://stackoverflow.com/questions/54593653/how-to-fade-in-a-text-or-an-image-with-pygame?noredirect=1&lq=1
+    #funkcja wzorowana na
+    # https://stackoverflow.com/questions/54593653/how-to-fade-in-a-text-or-an-image-with-pygame?noredirect=1&lq=1
     def game_over_animation(self):
         self.game_over_sound.play()
         original_surface = self.screen.copy()
